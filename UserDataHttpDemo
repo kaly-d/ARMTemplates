@@ -2,8 +2,14 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "workflows_UserDataHttpDemo_name": {
+        "Workflow Name": {
             "defaultValue": "UserDataHttpDemo",
+            "type": "String"
+        },
+        "Region": {
+            "type": "String"
+        },
+        "Webhook URL": {
             "type": "String"
         }
     },
@@ -12,10 +18,10 @@
         {
             "type": "Microsoft.Logic/workflows",
             "apiVersion": "2017-07-01",
-            "name": "[parameters('workflows_UserDataHttpDemo_name')]",
-            "location": "northcentralus",
+            "name": "[parameters('Workflow Name')]",
+            "location": "[parameters('Region')]",
             "properties": {
-                "state": "Disabled",
+                "state": "Enabled",
                 "definition": {
                     "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
                     "contentVersion": "1.0.0.0",
@@ -43,7 +49,7 @@
                             "runAfter": {},
                             "type": "Http",
                             "inputs": {
-                                "uri": "",
+                                "uri": "[parameters('Webhook URL')]",
                                 "method": "GET"
                             },
                             "runtimeConfiguration": {
